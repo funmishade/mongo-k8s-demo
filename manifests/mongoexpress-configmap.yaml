@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongoexpress-config
+  namespace: abc
+data:
+  db_host: mongo-service

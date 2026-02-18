@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: mongo-deployment
+  namespace: abc
+  labels:
+    app: mun
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mun
+  template:
+    metadata:
+      labels:
+        app: mun
+    spec:
+      containers:
+        - name: mun
+          image: mongo
+          ports:
+            - containerPort: 27017
+          env:                          # ✅ Correct alignment (inside container)
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: mongo-root-username
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: mongo-root-password
+
